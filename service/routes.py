@@ -118,13 +118,28 @@ def get_products(product_id):
         abort(status.HTTP_404_NOT_FOUND, f"product id {product_id} was not found")
 
     return product.serialize(), status.HTTP_200_OK
+
+
 ######################################################################
 # U P D A T E   A   P R O D U C T
 ######################################################################
 
-#
-# PLACE YOUR CODE TO UPDATE A PRODUCT HERE
-#
+@app.route("/products/<int:product_id>", methods=["PUT"])
+def put_product(product_id):
+    """Updates a product"""
+    check_content_type("application/json")
+    app.logger.info(f"Request to Update a product with id {product_id}")
+
+    # get the DB object
+    product = Product.find(product_id)
+    if not product:
+        abort(status.HTTP_404_NOT_FOUND, f"product with id {product_id} was not found")
+
+    # update in DB
+    product.deserialize(request.get_json())
+    product.update()
+
+    return product.serialize(), status.HTTP_200_OK
 
 ######################################################################
 # D E L E T E   A   P R O D U C T
