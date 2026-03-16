@@ -196,7 +196,7 @@ class TestProductModel(unittest.TestCase):
             new_product = ProductFactory()
             new_product.create()
 
-        # get first product from list of all products
+        # get first product's name from list of all products
         all_products = Product.all()
         first_name = all_products[0].name
 
@@ -218,7 +218,7 @@ class TestProductModel(unittest.TestCase):
             new_product = ProductFactory()
             new_product.create()
 
-        # get first product from list of all products
+        # get first product's availability from list of all products
         all_products = Product.all()
         first_available = all_products[0].available
 
@@ -247,7 +247,7 @@ class TestProductModel(unittest.TestCase):
         # count all products with that category
         count = sum(1 for product in all_products if product.category == first_category)
 
-        # assert Product.find_by_availability() finds the same number of matches
+        # assert Product.find_by_category() finds the same number of matches
         filtered_products = Product.find_by_category(first_category).all()
         self.assertEqual(len(filtered_products), count)
 
