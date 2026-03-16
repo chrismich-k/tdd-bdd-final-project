@@ -230,7 +230,7 @@ class TestProductModel(unittest.TestCase):
         self.assertEqual(len(filtered_products), count)
 
         # assert all found products have the availability we're loooking for
-        count = sum(1 for product in filtered_products if product.availabley == first_available)
+        count = sum(1 for product in filtered_products if product.available == first_available)
         self.assertEqual(len(filtered_products), count)
 
     def test_find_products_by_category(self):
