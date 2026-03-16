@@ -17,9 +17,44 @@
 """
 Test Factory to make fake objects for testing
 """
+from itertools import product
 import factory
 from factory.fuzzy import FuzzyChoice, FuzzyDecimal
 from service.models import Product, Category
+
+PRODUCT_CATEGORY_PREFIX = {
+    Category.CLOTHS: ["Second Hand", "Fashion", "Designer"],
+    Category.FOOD: ["Organic", "Frozen", "Low-Carb"],
+    Category.HOUSEWARES: ["Basic", "Premium", "Home Line"],
+    Category.AUTOMOTIVE : ["Budget", "Refurbished", "Quality"],
+    Category.TOOLS : ["Pro", "Stainless Steel", "Industrial Grade"],
+}
+
+PRODUCT_CATEGORY_NAMES = {
+    Category.CLOTHS: ["Sweater", "Hoodie", "Jeans"],
+    Category.FOOD: ["Bread", "Boiled Egg", "Cheese Burger"],
+    Category.HOUSEWARES: ["Bug Repellant", "Clock"],
+    Category.AUTOMOTIVE : ["Spark Plug", "Motor Oil", "Jerry Can"],
+    Category.TOOLS : ["Electric Drill", "Monkey Wrench", "Pliers"],
+}
+
+# product names per category
+PRODUCT_CATEGORY_PREFIXED_NAMES = {
+    category: [
+        f"{p} {n}" for p, n in product(
+            PRODUCT_CATEGORY_PREFIX[category],
+            PRODUCT_CATEGORY_NAMES[category]
+        )
+    ]
+    for category in set(PRODUCT_CATEGORY_PREFIX) & set(PRODUCT_CATEGORY_NAMES)
+}
+
+# all products in one list, to just use a simple FuzzyChoice()
+PRODUCT_NAMES = [
+    product_name
+    for sublist in PRODUCT_CATEGORY_PREFIXED_NAMES.values()
+    for product_name in sublist
+]
 
 
 class ProductFactory(factory.Factory):
@@ -31,4 +66,9 @@ class ProductFactory(factory.Factory):
         model = Product
 
     id = factory.Sequence(lambda n: n)
-   ## Add code to create Fake Products 
+    # FUTURE: match name and category using PRODUCT_CATEGORY_PREFIXED_NAMES
+    name = FuzzyChoice(PRODUCT_NAMES)
+    description = factory.Faker("text")
+    price = FuzzyDecimal(2, 200, 2)
+    available = FuzzyChoice([True, False])
+    category = FuzzyChoice(Category)
