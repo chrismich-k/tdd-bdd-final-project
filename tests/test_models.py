@@ -254,3 +254,25 @@ class TestProductModel(unittest.TestCase):
         # assert all found products have the category we're loooking for
         count = sum(1 for product in filtered_products if product.category == first_category)
         self.assertEqual(len(filtered_products), count)
+
+    def test_find_products_by_price(self):
+        """It should test whether find_by_price() correctly filters products"""
+        # create ten test products
+        for _ in range(10):
+            new_product = ProductFactory()
+            new_product.create()
+
+        # get first product's price from list of all products
+        all_products = Product.all()
+        first_price = all_products[0].price
+
+        # count all products with that price
+        count = sum(1 for product in all_products if product.price == first_price)
+
+        # assert Product.find_by_price() finds the same number of matches
+        filtered_products = Product.find_by_price(str(first_price)).all()
+        self.assertEqual(len(filtered_products), count)
+
+        # assert all found products have the price we're loooking for
+        count = sum(1 for product in filtered_products if product.price == first_price)
+        self.assertEqual(len(filtered_products), count)
