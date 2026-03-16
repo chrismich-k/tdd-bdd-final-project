@@ -26,16 +26,16 @@ PRODUCT_CATEGORY_PREFIX = {
     Category.CLOTHS: ["Second Hand", "Fashion", "Designer"],
     Category.FOOD: ["Organic", "Frozen", "Low-Carb"],
     Category.HOUSEWARES: ["Basic", "Premium", "Home Line"],
-    Category.AUTOMOTIVE : ["Budget", "Refurbished", "Quality"],
-    Category.TOOLS : ["Pro", "Stainless Steel", "Industrial Grade"],
+    Category.AUTOMOTIVE: ["Budget", "Refurbished", "Quality"],
+    Category.TOOLS: ["Pro", "Stainless Steel", "Industrial Grade"],
 }
 
 PRODUCT_CATEGORY_NAMES = {
     Category.CLOTHS: ["Sweater", "Hoodie", "Jeans"],
     Category.FOOD: ["Bread", "Boiled Egg", "Cheese Burger"],
     Category.HOUSEWARES: ["Bug Repellant", "Clock"],
-    Category.AUTOMOTIVE : ["Spark Plug", "Motor Oil", "Jerry Can"],
-    Category.TOOLS : ["Electric Drill", "Monkey Wrench", "Pliers"],
+    Category.AUTOMOTIVE: ["Spark Plug", "Motor Oil", "Jerry Can"],
+    Category.TOOLS: ["Electric Drill", "Monkey Wrench", "Pliers"],
 }
 
 # product names per category
