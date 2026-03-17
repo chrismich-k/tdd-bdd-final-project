@@ -215,6 +215,17 @@ class TestProductRoutes(TestCase):
         all_products = Product.all()
         self.assertEqual(len(all_products), initial_count - 1)
 
+    def test_list_all(self):
+        """It should test to get the list of all products"""
+        # create five test products
+        products = self._create_products(5)
+
+        # get all products from API and verify it matches how many we created
+        get_all_response = self.client.get(f"{BASE_URL}")
+        self.assertEqual(get_all_response.status_code, status.HTTP_200_OK)
+        all_data = get_all_response.get_json()
+        self.assertEqual(len(all_data), len(products))
+
     ######################################################################
     # Utility functions
     ######################################################################
