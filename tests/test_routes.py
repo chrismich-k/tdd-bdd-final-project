@@ -226,6 +226,71 @@ class TestProductRoutes(TestCase):
         all_data = get_all_response.get_json()
         self.assertEqual(len(all_data), len(products))
 
+    def test_list_by_name(self):
+        """It should test to get a list of products by their name"""
+        # create five test products
+        products = self._create_products(5)
+
+        # use name of first product, count products with same name
+        product_name = products[0].name
+        count_names = sum(1 for product in products if product.name == product_name)
+
+        # get all products from API, filter by name parameter
+        params = {"name": product_name}
+        get_name_response = self.client.get(f"{BASE_URL}", query_string=params)
+        self.assertEqual(get_name_response.status_code, status.HTTP_200_OK)
+
+        # check the number of results matches the previous count
+        filtered_products = get_name_response.get_json()
+        self.assertEqual(len(filtered_products), count_names)
+
+        # check if each retrieved product has the correct name
+        for product in filtered_products:
+            self.assertEqual(product["name"], product_name)
+
+    def test_query_by_category(self):
+        """It should test to get a list of products by their name"""
+        # create five test products
+        products = self._create_products(5)
+
+        # use category of first product, count products with same category
+        product_category = products[0].category
+        count_category = sum(1 for product in products if product.category == product_category)
+
+        # get all products from API, filter by category parameter
+        params = {"category": product_category.name}
+        get_category_response = self.client.get(f"{BASE_URL}", query_string=params)
+        self.assertEqual(get_category_response.status_code, status.HTTP_200_OK)
+
+        # check the number of results matches the previous count
+        filtered_products = get_category_response.get_json()
+        self.assertEqual(len(filtered_products), count_category)
+
+        # check if each retrieved product has the correct category
+        for product in filtered_products:
+            self.assertEqual(product["category"], product_category.name)
+
+    def test_query_by_availability(self):
+        """It should test to get a list of products filtered by availability"""
+        # create ten test products, list of available products and their count
+        products = self._create_products(10)
+        available_products = [product for product in products if product.available]
+        num_available_products = len(available_products)
+        logging.debug(f"count of available products: {num_available_products}")
+
+        # get all products from API, filter by available parameter
+        params = {"available": True}
+        get_available_response = self.client.get(f"{BASE_URL}", query_string=params)
+        self.assertEqual(get_available_response.status_code, status.HTTP_200_OK)
+
+        # check the number of results matches the previous count
+        filtered_products = get_available_response.get_json()
+        self.assertEqual(len(filtered_products), num_available_products)
+
+        # check if each retrieved product has the correct availability
+        for product in filtered_products:
+            self.assertEqual(product["available"], True)
+
     ######################################################################
     # Utility functions
     ######################################################################
