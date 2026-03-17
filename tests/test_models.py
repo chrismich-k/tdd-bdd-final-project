@@ -208,8 +208,8 @@ class TestProductModel(unittest.TestCase):
         self.assertEqual(len(filtered_products), count)
 
         # assert all found products have the name we're loooking for
-        count = sum(1 for product in filtered_products if product.name == first_name)
-        self.assertEqual(len(filtered_products), count)
+        for product in filtered_products:
+            self.assertEqual(product.name, first_name)
 
     def test_find_products_by_availability(self):
         """It should test whether find_by_availability() correctly filters products"""
@@ -230,8 +230,8 @@ class TestProductModel(unittest.TestCase):
         self.assertEqual(len(filtered_products), count)
 
         # assert all found products have the availability we're loooking for
-        count = sum(1 for product in filtered_products if product.available == first_available)
-        self.assertEqual(len(filtered_products), count)
+        for product in filtered_products:
+            self.assertEqual(product.available, first_available)
 
     def test_find_products_by_category(self):
         """It should test whether find_by_category() correctly filters products"""
@@ -252,8 +252,8 @@ class TestProductModel(unittest.TestCase):
         self.assertEqual(len(filtered_products), count)
 
         # assert all found products have the category we're loooking for
-        count = sum(1 for product in filtered_products if product.category == first_category)
-        self.assertEqual(len(filtered_products), count)
+        for product in filtered_products:
+            self.assertEqual(product.category, first_category)
 
     def test_find_products_by_price(self):
         """It should test whether find_by_price() correctly filters products"""
@@ -274,5 +274,5 @@ class TestProductModel(unittest.TestCase):
         self.assertEqual(len(filtered_products), count)
 
         # assert all found products have the price we're loooking for
-        count = sum(1 for product in filtered_products if product.price == first_price)
-        self.assertEqual(len(filtered_products), count)
+        for product in filtered_products:
+            self.assertEqual(product.price, first_price)
