@@ -276,7 +276,7 @@ class TestProductRoutes(TestCase):
         products = self._create_products(10)
         available_products = [product for product in products if product.available]
         num_available_products = len(available_products)
-        logging.debug(f"count of available products: {num_available_products}")
+        logging.debug("count of available products: %s", str(num_available_products))
 
         # get all products from API, filter by available parameter
         params = {"available": True}
@@ -300,4 +300,5 @@ class TestProductRoutes(TestCase):
         response = self.client.get(BASE_URL)
         self.assertEqual(response.status_code, status.HTTP_200_OK)
         data = response.get_json()
+
         return len(data)
