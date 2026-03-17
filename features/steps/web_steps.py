@@ -132,3 +132,24 @@ def step_impl(context, element_name, text_string):
     )
     element.clear()
     element.send_keys(text_string)
+
+@when(u'I press the "{button_name}" button')
+def step_impl(context, button_name):
+    button_id = button_name.lower().replace(' ', '_') + '-btn'
+    element = context.driver.find_element(By.ID, button_id)
+    element.click()
+
+@then(u'I should see the message "{message}"')
+def step_impl(context, message):
+    element = context.driver.find_element(By.ID, 'flash_message')
+    assert message in element.text
+
+@then(u'I should see "{search_text}" in the results')
+def step_impl(context, search_text):
+    element = context.driver.find_element(By.ID, 'search_results')
+    assert search_text in element.text
+
+@then(u'I should not see "{search_text}" in the results')
+def step_impl(context, search_text):
+    element = context.driver.find_element(By.ID, 'search_results')
+    assert search_text not in element.text
