@@ -146,6 +146,9 @@ def put_product(product_id):
 ######################################################################
 
 
-#
-# PLACE YOUR CODE TO DELETE A PRODUCT HERE
-#
+@app.route("/products/<int:product_id>", methods=["DELETE"])
+def delete_product(product_id):
+    """Delete a product"""
+    product = Product.find(product_id)
+    product.delete()
+    return "", status.HTTP_204_NO_CONTENT

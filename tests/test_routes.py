@@ -196,6 +196,25 @@ class TestProductRoutes(TestCase):
         returned_data = update_response.get_json()
         self.assertEqual(returned_data["description"], new_product_data["description"])
 
+    def test_delete_product(self):
+        """It should successfully delete a product"""
+        # create five test products
+        products = self._create_products(5)
+        initial_count = len(products)
+
+        # delete the first in the list
+        delete_response = self.client.delete(f"{BASE_URL}/{products[0].id}")
+        self.assertEqual(delete_response.status_code, status.HTTP_204_NO_CONTENT)
+        self.assertEqual(len(delete_response.data), 0)
+
+        # try to access the deleted prodauct
+        get_response = self.client.get(f"{BASE_URL}/{products[0].id}")
+        self.assertEqual(get_response.status_code, status.HTTP_404_NOT_FOUND)
+
+        # count the remaining products in the DB, check it has decreased
+        all_products = Product.all()
+        self.assertEqual(len(all_products), initial_count - 1)
+
     ######################################################################
     # Utility functions
     ######################################################################
