@@ -61,7 +61,7 @@ Scenario: Update a Product
     And I press the "Search" button
     Then I should see the message "Success"
     And I should see "1/4 lb burger" in the "Description" field
-    When I change "Description" to "half eaten burger, 1/8 lb left"
+    When I change "Name" to "You asked for it - Eat this!"
     And I press the "Update" button
     Then I should see the message "Success"
     When I copy the "Id" field
@@ -69,12 +69,12 @@ Scenario: Update a Product
     And I paste the "Id" field
     And I press the "Retrieve" button
     Then I should see the message "Success" 
-    And I should see "half eaten burger, 1/8 lb left" in the "Description" field
+    And I should see "You asked for it - Eat this!" in the "Name" field
     When I press the "Clear" button
     And I press the "Search" button
     Then I should see the message "Success"
-    And I should see "Big Mac" in the results
-    And I should not see "1/4 lb burger" in the results
+    And I should see "You asked for it - Eat this!" in the results
+    And I should not see "Big Mac" in the results
 
 Scenario: Delete a Product
     When I visit the "Home Page"
