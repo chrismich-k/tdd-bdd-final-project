@@ -141,8 +141,13 @@ def step_impl(context, button_name):
 
 @then(u'I should see the message "{message}"')
 def step_impl(context, message):
-    element = context.driver.find_element(By.ID, 'flash_message')
-    assert message in element.text
+    element = WebDriverWait(context.driver, context.wait_seconds).until(
+        expected_conditions.text_to_be_present_in_element(
+            (By.ID, 'flash_message'),
+            message
+        )
+    )
+    assert(element)
 
 @then(u'I should see "{search_text}" in the results')
 def step_impl(context, search_text):
